@@ -24,8 +24,16 @@ public class points : MonoBehaviour
         }
         if (throwing.despawn)
         {
-            if (transform.rotation.x !=0 || transform.rotation.z != 0)
+            print('1');
+            if (transform.eulerAngles.x < -10 || transform.eulerAngles.x > 10)
             {
+                print('2');
+                //score.getScore();
+                Destroy(gameObject);
+            }
+            else if (transform.eulerAngles.z < -10 || transform.eulerAngles.z > 10)
+            {
+                print('3');
                 //score.getScore();
                 Destroy(gameObject);
             }

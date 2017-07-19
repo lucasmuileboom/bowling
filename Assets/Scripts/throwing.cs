@@ -1,15 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class throwing : MonoBehaviour
 {
     [SerializeField] private GameObject aim;
+    [SerializeField] private Text throwingPowerT;
     private input input;
 
     private Rigidbody _rigidbody;
     private Vector3 ballP;//
-    private float throwingPower = 2000;//
+    private int throwingPower = 2000;//
     private float rotation = 0;
     private float timeLeft;//g
     private float StartTime = 10;//
@@ -20,11 +22,13 @@ public class throwing : MonoBehaviour
     private int Throwcounter = 0;//
     public bool despawn = false;//
 
+
     void Start ()
     {
         ballP = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         _rigidbody = GetComponent<Rigidbody>();
         input = GetComponent<input>();
+        throwingPowerT.text = throwingPower.ToString();
     }
     void Update()
     {
@@ -33,14 +37,17 @@ public class throwing : MonoBehaviour
             if (timeLeft < 0)
             {
                 throwingPower = 2000;
+                throwingPowerT.text = throwingPower.ToString();
                 timer = false;
                 Throwing = false;
                 despawn = true;
                 Throwcounter++;
                 transform.position = ballP;
+                rotation = 0;
                 _rigidbody.velocity = Vector3.zero;
+                _rigidbody.angularVelocity = Vector3.zero;
+                transform.rotation = Quaternion.Euler(0, 0, 0);                
                 print("throw over");
-                //bereken score aanroepen
                 if (Throwcounter == 2)
                 {
                     Throwcounter = 0;
@@ -83,6 +90,7 @@ public class throwing : MonoBehaviour
             {
                 throwingPower = throwingPower + 25;
                 print(throwingPower);
+                throwingPowerT.text = throwingPower.ToString();
                 Throwingcheck = true;
             }
             if (!input.space)//throw
